@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+@using (Ajax.BeginForm("GetEmployers", "Empoyers",
+    new AjaxOptions
+    {
+        UpdateTargetId = "tableEmpoeyrs",
+        InsertionMode = InsertionMode.Replace,
+
+    }))
+{
+    <div class="row">
+        <div class="col-md-4">
+            Колличество сотрудников
+        </div>
+        <div class="col-md-6">
+            @Html.TextBox("countEmployer")
+        </div>
+        <div class="col-md-2">
+            <button type="submit">Отправить</button>
+        </div>
+    </div>
+}
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Фото</th>
+            <th>Ф.И.О</th>
+            <th>Дата Рождения</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id="tableEmpoeyrs"></tbody>
+</table>
+
+<div id="myModal" class="modal fade" role="dialog"></div>
+
+@section scripts
+{
+
+    <script>
+        function ShowInfo() {
+
+
+        }
+
+
+    </script>
+}

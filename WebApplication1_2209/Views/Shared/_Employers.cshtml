@@ -1,0 +1,46 @@
+﻿@using WebApplication1_2209.Controllers
+@using PagedList.Mvc
+
+@model PagedList.IPagedList<results>
+@{
+    int number = 1;
+}
+@foreach (results user in Model)
+{
+    <tr onclick="ShowInfo();">
+        <td>@number</td>
+        <td><img src="@user.picture.thumbnail" /></td>
+        <td>@user.name.last , @user.name.first</td>
+        <td>@user.dob.date</td>
+        <td>
+            @Ajax.ActionLink("Info", "GetInfo", "Empoyers",
+           new { uuid =user.login.uuid},
+    new AjaxOptions
+    {
+        UpdateTargetId = "myModal",
+        InsertionMode = InsertionMode.Replace,
+        HttpMethod = "GET"
+    },
+    new { @class = "btn btn-info btn-lg", @data_toggle = "modal", @data_target = "#myModal" })
+        </td>
+    </tr>
+    number += 1;
+}
+
+<tr>
+    <td colspan="5">
+        Page @(Model.PageCount < Model.PageNumber
+                 ? 0
+                 : Model.PageNumber)
+        of @Model.PageCount
+
+        @Html.PagedListPager(Model,
+                 page => Url.Action("GetEmployers", new { page = page, countEmployer =0}),
+                  PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(
+                      new AjaxOptions()
+                      {
+                          HttpMethod = "GET",
+                          UpdateTargetId = "tableEmpoeyrs"
+                      }))
+    </td>
+</tr>
